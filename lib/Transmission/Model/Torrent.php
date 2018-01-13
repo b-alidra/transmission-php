@@ -76,6 +76,11 @@ class Torrent extends AbstractModel
     /**
      * @var array
      */
+    protected $fileStats = array();
+
+    /**
+     * @var array
+     */
     protected $peers = array();
 
     /**
@@ -318,6 +323,24 @@ class Torrent extends AbstractModel
     }
 
     /**
+     * @param array $fileStats
+     */
+    public function setFileStats(array $fileStats)
+    {
+        $this->fileStats = array_map(function ($fileStats) {
+            return PropertyMapper::map(new FileStats(), $fileStats);
+        }, $fileStats);
+    }
+
+    /**
+     * @return array
+     */
+    public function getFileStats()
+    {
+        return $this->fileStats;
+    }
+
+    /**
      * @param array $peers
      */
     public function setPeers(array $peers)
@@ -478,6 +501,7 @@ class Torrent extends AbstractModel
             'rateDownload' => 'downloadRate',
             'percentDone' => 'percentDone',
             'files' => 'files',
+            'fileStats' => 'fileStats',
             'peers' => 'peers',
             'peersConnected' => 'peersConnected',
             'trackers' => 'trackers',

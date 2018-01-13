@@ -46,6 +46,9 @@ class TorrentTest extends \PHPUnit_Framework_TestCase
             'files' => array(
                 (object) array()
             ),
+            'fileStats' => array(
+                (object) array()
+            ),
             'peers' => array(
                 (object) array(),
                 (object) array()
@@ -79,6 +82,7 @@ class TorrentTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1024000000, $this->getTorrent()->getDownloadedEver());
         $this->assertEquals(1024000000000, $this->getTorrent()->getUploadedEver());
         $this->assertCount(1, $this->getTorrent()->getFiles());
+        $this->assertCount(1, $this->getTorrent()->getFileStats());
         $this->assertCount(2, $this->getTorrent()->getPeers());
         $this->assertCount(3, $this->getTorrent()->getTrackers());
     }

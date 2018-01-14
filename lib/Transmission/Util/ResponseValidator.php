@@ -26,6 +26,8 @@ class ResponseValidator
         switch ($method) {
             case 'torrent-get':
                 return self::validateGetResponse($response);
+            case 'torrent-set':
+                return self::validateSetResponse($response);
             case 'torrent-add':
                 return self::validateAddResponse($response);
             case 'session-get':
@@ -51,6 +53,22 @@ class ResponseValidator
         }
 
         return $response->arguments->torrents;
+    }
+
+    /**
+     * @param  \stdClass         $response
+     * @throws \RuntimeException
+     * @return null
+     */
+    public static function validateSetResponse(\stdClass $response)
+    {
+        if (!isset($response->arguments)) {
+            throw new \RuntimeException(
+                'Invalid response received from Transmission'
+            );
+        }
+
+        return null;
     }
 
     /**

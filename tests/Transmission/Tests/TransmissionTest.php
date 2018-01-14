@@ -256,6 +256,26 @@ class TransmissionTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function shouldSetParameters()
+    {
+        $client = $this->getMock('Transmission\Client');
+        $client->expects($this->once())
+            ->method('call')
+            ->with('torrent-set', array('ids' => array(1), 'download-limit' => 100))
+            ->will($this->returnCallback(function () {
+                return (object) array(
+                    'result' => 'success'
+                );
+            }));
+
+        $transmission = new Transmission();
+        $transmission->setClient($client);
+        $transmission->set(1, ['download-limit' => 100]);
+    }
+
+    /**
+     * @test
+     */
     public function shouldStartDownload()
     {
         $client = $this->getMock('Transmission\Client');

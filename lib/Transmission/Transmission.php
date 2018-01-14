@@ -156,11 +156,16 @@ class Transmission
      * @param  string   $torrent
      * @param  boolean  $metainfo
      * @param  string   $savepath
+     * @param  array    $parameters Additional parameters to set
      * @return Torrent
      */
-    public function add($torrent, $metainfo = false, $savepath = null)
+    public function add($torrent, $metainfo = false, $savepath = null, $parameters = null)
     {
-        $parameters = array($metainfo ? 'metainfo' : 'filename' => $torrent);
+        if ($parameters === null) {
+            $parameters = [];
+        }
+
+        $parameters[$metainfo ? 'metainfo' : 'filename'] = $torrent;
 
         if ($savepath !== null) {
             $parameters['download-dir'] = (string) $savepath;
@@ -175,6 +180,28 @@ class Transmission
             new Torrent($this->getClient()),
             $this->getValidator()->validate('torrent-add', $response)
         );
+    }
+
+    /**
+     * Set torrent parameters
+     *
+     * @param  array|integer $id ID/hash of torrent (or array of them)
+     * @param  array         $parameters Parameters to set
+     */
+    public function set($id, $parameters)
+    {
+        if (is_array($id)) {
+            $parameters['ids'] = $id;
+        } else {
+            $parameters['ids'] = [$id];
+        }
+
+        $response = $this->getClient()->call(
+            'torrent-set',
+            $parameters
+        );
+
+        $this->getValidator()->validate('torrent-set', $response);
     }
 
     /**

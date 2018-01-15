@@ -157,9 +157,10 @@ class Transmission
      * @param  boolean  $metainfo
      * @param  string   $savepath
      * @param  array    $parameters Additional parameters to set
+     * @param  boolean   &$duplicated Output param indicating if torrent is already in client
      * @return Torrent
      */
-    public function add($torrent, $metainfo = false, $savepath = null, $parameters = null)
+    public function add($torrent, $metainfo = false, $savepath = null, $parameters = null, &$duplicated = null)
     {
         if ($parameters === null) {
             $parameters = [];
@@ -176,9 +177,16 @@ class Transmission
             $parameters
         );
 
+        $torrentInfo = $this->getValidator()->validate('torrent-add', $response);
+
+        if ($duplicated !== null) {
+            $duplicated = isset($response->arguments)
+                && isset($response->arguments->{'torrent-duplicate'});
+        }
+
         return $this->getMapper()->map(
             new Torrent($this->getClient()),
-            $this->getValidator()->validate('torrent-add', $response)
+            $torrentInfo
         );
     }
 

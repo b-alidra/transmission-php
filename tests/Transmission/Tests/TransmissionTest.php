@@ -121,7 +121,7 @@ class TransmissionTest extends \PHPUnit_Framework_TestCase
 
         $this->getTransmission()->setClient($client);
 
-        $torrent = $this->getTransmission()->add('foo');
+        $torrent = $this->getTransmission()->add('foo', null, null, null);
         $this->assertInstanceOf('Transmission\Model\Torrent', $torrent);
     }
 
@@ -141,15 +141,18 @@ class TransmissionTest extends \PHPUnit_Framework_TestCase
                 return (object) array(
                     'result' => 'success',
                     'arguments' => (object) array(
-                        'torrent-added' => (object) array()
+                        'torrent-duplicate' => (object) array()
                     )
                 );
             }));
 
         $this->getTransmission()->setClient($client);
 
-        $torrent = $this->getTransmission()->add('foo', true);
+        $duplicated = false;
+
+        $torrent = $this->getTransmission()->add('foo', true, null, null, $duplicated);
         $this->assertInstanceOf('Transmission\Model\Torrent', $torrent);
+        $this->assertTrue($duplicated);
     }
 
     /**

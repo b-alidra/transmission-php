@@ -24,6 +24,11 @@ class Torrent extends AbstractModel
     protected $size;
 
     /**
+     * @var integer
+     */
+    protected $totalSize;
+
+    /**
      * @var string
      */
     protected $name;
@@ -159,6 +164,22 @@ class Torrent extends AbstractModel
     public function getSize()
     {
         return $this->size;
+    }
+
+    /**
+     * @param integer $size
+     */
+    public function setTotalSize($totalSize)
+    {
+        $this->totalSize = $totalSize;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getTotalSize()
+    {
+        return $this->totalSize;
     }
 
     /**
@@ -494,6 +515,7 @@ class Torrent extends AbstractModel
             'id' => 'id',
             'eta' => 'eta',
             'sizeWhenDone' => 'size',
+            'totalSize' => 'totalSize',
             'name' => 'name',
             'status' => 'status',
             'isFinished' => 'finished',

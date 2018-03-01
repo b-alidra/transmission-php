@@ -119,6 +119,11 @@ class Torrent extends AbstractModel
     protected $uploadedEver;
 
     /**
+     * @var integer
+     */
+    protected $leftUntilDone;
+
+    /**
      * @param integer $id
      */
     public function setId($id)
@@ -507,6 +512,20 @@ class Torrent extends AbstractModel
     }
 
     /**
+     * @return int
+     */
+    public function getLeftUntilDone() {
+        return $this->leftUntilDone;
+    }
+
+    /**
+     * @param int $leftUntilDone
+     */
+    public function setLeftUntilDone($leftUntilDone) {
+        $this->leftUntilDone = $leftUntilDone;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public static function getMapping()
@@ -533,7 +552,8 @@ class Torrent extends AbstractModel
             'hashString' => 'hash',
             'downloadDir' => 'downloadDir',
             'downloadedEver' => 'downloadedEver',
-            'uploadedEver' => 'uploadedEver'
+            'uploadedEver' => 'uploadedEver',
+            'leftUntilDone' => 'leftUntilDone'
         );
     }
 }

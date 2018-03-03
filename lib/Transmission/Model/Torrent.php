@@ -51,6 +51,11 @@ class Torrent extends AbstractModel
     /**
      * @var integer
      */
+    protected $addedDate;
+
+    /**
+     * @var integer
+     */
     protected $startDate;
     
     /**
@@ -252,6 +257,22 @@ class Torrent extends AbstractModel
     }
 
     /**
+     * @var integer $addedDate
+     */
+    public function setAddedDate($addedDate)
+    {
+        $this->addedDate = (integer) $addedDate;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getAddedDate()
+    {
+        return $this->addedDate;
+    }
+
+    /**
      * @var integer $startDate
      */
     public function setStartDate($startDate)
@@ -266,6 +287,7 @@ class Torrent extends AbstractModel
     {
         return $this->startDate;
     }
+
     /**
      * @var integer $rate
      */
@@ -547,6 +569,7 @@ class Torrent extends AbstractModel
             'peersConnected' => 'peersConnected',
             'trackers' => 'trackers',
             'trackerStats' => 'trackerStats',
+            'addedDate' => 'addedDate',
             'startDate' => 'startDate',
             'uploadRatio' => 'uploadRatio',
             'hashString' => 'hash',
